@@ -155,7 +155,7 @@ public class FrmLogistica extends JFrame {
         });
         pnlEditarEnvio.add(btnCancelarEnvio);
 
-        pnlEditarEnvio.setVisible(false); // Se oculta al inicio
+        pnlEditarEnvio.setVisible(false); // Se oculta al inicio.
 
         // Panel 2 (siempre visible)
         tblEnvios = new JTable();
