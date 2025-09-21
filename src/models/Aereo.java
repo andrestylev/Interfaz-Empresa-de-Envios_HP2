@@ -1,6 +1,8 @@
+package models;
+
 public class Aereo extends Envio {
-    private int tarifaPorKM = 5000;
-    private int tarifaPorKilos = 4000;
+    private double tarifaPorKM = 5000;
+    private double tarifaPorKilos = 4000;
 
     public Aereo(int codigo, String cliente, double peso, double distancia) {
         super(codigo, cliente, peso, distancia);

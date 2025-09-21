@@ -1,3 +1,5 @@
+package models;
+
 public abstract class Envio {
     private int codigo;
     private String cliente;
