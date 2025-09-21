@@ -34,23 +34,25 @@ public class FrmLogistica extends JFrame {
 
     public String[] encabezados = new String[] { "Código", "Cliente", "Peso", "Distancia", "Tipo", "Costo" };
 
-    private List<Envio> listaEnvios = new ArrayList<>();
+    private List<Envio> listaEnvios = new ArrayList<>(); // crea una lista de envios
 
-    private JTable tblEnvios;
+    private JTable tblEnvios; // paneles
     private JPanel pnlEditarEnvio;
 
-    private JTextField txtNumero, txtCliente, txtPeso, txtDistancia;
-    private JComboBox<String> cmbTipoEnvio;
+    private JTextField txtNumero, txtCliente, txtPeso, txtDistancia; // convierte los atrbibutos en variables
+    private JComboBox<String> cmbTipoEnvio; // lista plegable
 
     public FrmLogistica() {
         setSize(780, 630);
         setTitle("Operador Logísitico");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // centra la ventana en la pantalla
-        
+
         // botones de la barra de herramientas
         JToolBar tbLogistica = new JToolBar();
-        tbLogistica.setBorder(new LineBorder(Color.lightGray, 2));
+        tbLogistica.setBorder(new LineBorder(Color.lightGray, 3));
+        tbLogistica.setBorder(new EmptyBorder(20, 20, 20, 20));
+
         JButton btnAgregarEnvio = new JButton();
         btnAgregarEnvio.setIcon(new ImageIcon(getClass().getResource("/iconos/AgregarEnvio.png")));
         btnAgregarEnvio.setToolTipText("Agregar Envío");
@@ -76,7 +78,6 @@ public class FrmLogistica extends JFrame {
         JPanel pnlEnvios = new JPanel();
         pnlEnvios.setLayout(new BoxLayout(pnlEnvios, BoxLayout.Y_AXIS));
         pnlEnvios.setBorder(new EmptyBorder(20, 20, 20, 20));
-
 
         // Panel 1 (oculto por defecto)
         pnlEditarEnvio = new JPanel();
@@ -146,7 +147,7 @@ public class FrmLogistica extends JFrame {
 
         JButton btnCancelarEnvio = new JButton("<html><b>CANCELAR</b></html>");
         btnCancelarEnvio.setBounds(525, 120, 100, 25);
-         btnCancelarEnvio.setBackground(Color.red);
+        btnCancelarEnvio.setBackground(Color.red);
         btnCancelarEnvio.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 cancelarEnvio();
@@ -160,13 +161,20 @@ public class FrmLogistica extends JFrame {
         tblEnvios = new JTable();
         JScrollPane spListaEnvios = new JScrollPane(tblEnvios);
 
-        DefaultTableModel ccc = new DefaultTableModel(null, encabezados); // tabla con los encabezados
+        DefaultTableModel ccc = new DefaultTableModel(null, encabezados) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tblEnvios.setModel(ccc);
+
         tblEnvios.getTableHeader().setReorderingAllowed(false);
-        tblEnvios.getTableHeader().setBackground(new Color(30, 144, 255));
-tblEnvios.getTableHeader().setForeground(Color.WHITE);
-tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
-        
+        tblEnvios.getTableHeader().setBackground(new Color(40, 144, 255));
+        tblEnvios.getTableHeader().setForeground(Color.WHITE);
+        tblEnvios.setBorder(new LineBorder(Color.lightGray, 2));
+        tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+
         // Agregar componentes
         pnlEnvios.add(pnlEditarEnvio);
         pnlEnvios.add(spListaEnvios);
@@ -193,11 +201,11 @@ tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD
             return;
         }
 
-        DefaultTableModel modelo = (DefaultTableModel) tblEnvios.getModel();
-
-        for (int i = filas.length - 1; i >= 0; i--) { // borrar de atrás hacia adelante
-            modelo.removeRow(filas[i]);
+        for (int i = filas.length - 1; i >= 0; i--) {
+            listaEnvios.remove(filas[i]);
         }
+
+        listarEnvios(); // refrescar tabla
     }
 
     public void guardarEnvio() {
@@ -256,30 +264,38 @@ tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD
                 break;
         }
 
-        double costo = envio.calcularTarifa();
-        String costoFormateado = String.format("%.2f", costo);
-
         listaEnvios.add(envio);
+        listarEnvios();
 
-        DefaultTableModel model = (DefaultTableModel) tblEnvios.getModel(); // agrega filas a la tabla
-        model.addRow(new Object[] {
-                "# " + envio.getCodigo(), // coge el codigo y lo demas, de los getters de Envio
-                envio.getCliente(),
-                envio.getPeso() + " KG",
-                envio.getDistancia() + " KM",
-                tipo,
-                "$ " +  costoFormateado 
-        });
         txtNumero.setText(""); // borra los campos despues que presione aceptar
         txtCliente.setText("");
         txtPeso.setText("");
         txtDistancia.setText("");
 
-        pnlEditarEnvio.setVisible(false);
+        pnlEditarEnvio.setVisible(true);
 
     }
 
     public void cancelarEnvio() {
         pnlEditarEnvio.setVisible(false); // oculta el panel al presionar cancelar en el panel de editar envio
+    }
+
+    public void listarEnvios() {
+        DefaultTableModel model = (DefaultTableModel) tblEnvios.getModel();
+        model.setRowCount(0);
+
+        for (Envio envio : listaEnvios) {
+            double costo = envio.calcularTarifa();
+            String costoFormateado = String.format("%.2f", costo); // limita a dos decimales
+            model.addRow(new Object[] {
+                    "# " + envio.getCodigo(),
+                    envio.getCliente(),
+                    envio.getPeso() + " KG",
+                    envio.getDistancia() + " KM",
+                    envio.getClass().getSimpleName(), // recibe el nombre de la clase que se selecciono terrestre aereo
+                                                      // o mar
+                    "$ " + costoFormateado
+            });
+        }
     }
 }
