@@ -22,6 +22,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import models.Aereo;
 import models.Envio;
 import models.Mar;
@@ -30,6 +33,8 @@ import models.Terrestre;
 public class FrmLogistica extends JFrame {
 
     public String[] encabezados = new String[] { "Código", "Cliente", "Peso", "Distancia", "Tipo", "Costo" };
+
+    private List<Envio> listaEnvios = new ArrayList<>();
 
     private JTable tblEnvios;
     private JPanel pnlEditarEnvio;
@@ -158,6 +163,9 @@ public class FrmLogistica extends JFrame {
         DefaultTableModel ccc = new DefaultTableModel(null, encabezados); // tabla con los encabezados
         tblEnvios.setModel(ccc);
         tblEnvios.getTableHeader().setReorderingAllowed(false);
+        tblEnvios.getTableHeader().setBackground(new Color(30, 144, 255));
+tblEnvios.getTableHeader().setForeground(Color.WHITE);
+tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
         
         // Agregar componentes
         pnlEnvios.add(pnlEditarEnvio);
@@ -251,14 +259,16 @@ public class FrmLogistica extends JFrame {
         double costo = envio.calcularTarifa();
         String costoFormateado = String.format("%.2f", costo);
 
+        listaEnvios.add(envio);
+
         DefaultTableModel model = (DefaultTableModel) tblEnvios.getModel(); // agrega filas a la tabla
         model.addRow(new Object[] {
-                envio.getCodigo(), // coge el codigo y lo demas, de los getters de Envio
+                "# " + envio.getCodigo(), // coge el codigo y lo demas, de los getters de Envio
                 envio.getCliente(),
-                envio.getPeso(),
-                envio.getDistancia(),
+                envio.getPeso() + " KG",
+                envio.getDistancia() + " KM",
                 tipo,
-                costoFormateado
+                "$ " +  costoFormateado 
         });
         txtNumero.setText(""); // borra los campos despues que presione aceptar
         txtCliente.setText("");

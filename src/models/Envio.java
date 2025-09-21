@@ -5,7 +5,7 @@ public abstract class Envio {
     private String cliente;
     private double peso;
     private double distancia;
- 
+
     public Envio(int codigo, String cliente, double peso, double distancia) {
         this.codigo = codigo;
         this.cliente = cliente;
@@ -22,7 +22,7 @@ public abstract class Envio {
     }
 
     public double getPeso() {
-        return  peso;
+        return peso;
     }
 
     public double getDistancia() {
@@ -35,5 +35,5 @@ public abstract class Envio {
         return calcularTarifa();
 
     }
-    
+
 }
