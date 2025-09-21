@@ -7,7 +7,6 @@ public class Terrestre extends Envio {
     public Terrestre(int codigo, String cliente, double peso, double distancia) {
         super(codigo, cliente, peso, distancia);
     }
-
      @Override
     public double calcularTarifa() {
         return (getPeso() * tarifaPorKM) + (getDistancia() * tarifaPorKilos);

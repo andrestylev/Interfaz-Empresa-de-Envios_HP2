@@ -169,7 +169,7 @@ public class FrmLogistica extends JFrame {
         };
         tblEnvios.setModel(ccc);
 
-        tblEnvios.getTableHeader().setReorderingAllowed(false); 
+        tblEnvios.getTableHeader().setReorderingAllowed(false);
         tblEnvios.getTableHeader().setBackground(new Color(40, 144, 255)); // estilos del encabezado de la lista
         tblEnvios.getTableHeader().setForeground(Color.WHITE);
         tblEnvios.setBorder(new LineBorder(Color.lightGray, 2));
@@ -207,7 +207,6 @@ public class FrmLogistica extends JFrame {
 
         listarEnvios(); // refrescar tabla
     }
-
     public void guardarEnvio() {
         // validacion de
         String codigoTexto = txtNumero.getText().trim();
@@ -236,7 +235,7 @@ public class FrmLogistica extends JFrame {
         String distanciaTexto = txtDistancia.getText().trim().replace(',', '.');
 
         if (!pesoTexto.matches("\\d+(\\.\\d+)?")) {
-            JOptionPane.showMessageDialog(this, "peso invalido. ingrese un numero real", "error",
+            JOptionPane.showMessageDialog(this, " peso invalido. ingrese un numero real", "error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -275,7 +274,6 @@ public class FrmLogistica extends JFrame {
         pnlEditarEnvio.setVisible(true);
 
     }
-
     public void cancelarEnvio() {
         pnlEditarEnvio.setVisible(false); // oculta el panel al presionar cancelar en el panel de editar envio
     }
