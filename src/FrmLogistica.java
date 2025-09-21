@@ -88,7 +88,7 @@ public class FrmLogistica extends JFrame {
         pnlEditarEnvio.setBounds(EXIT_ON_CLOSE, ABORT, WIDTH, HEIGHT);
 
         // nombre que se ubica a la izquierda del contenedor
-        JLabel lblNumero = new JLabel("Codigo");
+        JLabel lblNumero = new JLabel("Codigo #");
         lblNumero.setBounds(10, 10, 100, 25);
         pnlEditarEnvio.add(lblNumero);
         // contenedor donde el usuario escribe el dato relacionado
@@ -104,7 +104,7 @@ public class FrmLogistica extends JFrame {
         txtCliente.setBounds(110, 40, 100, 25);
         pnlEditarEnvio.add(txtCliente);
 
-        JLabel lblPeso = new JLabel("Peso");
+        JLabel lblPeso = new JLabel("Peso (KG)");
         lblPeso.setBounds(10, 70, 100, 25);
         pnlEditarEnvio.add(lblPeso);
 
@@ -113,7 +113,7 @@ public class FrmLogistica extends JFrame {
         pnlEditarEnvio.add(txtPeso);
 
         // lista desplegable de tipos de envio
-        JLabel lblTipo = new JLabel("Tipo");
+        JLabel lblTipo = new JLabel("Transporte ");
         lblTipo.setBounds(220, 10, 100, 25);
         pnlEditarEnvio.add(lblTipo);
 
@@ -126,12 +126,12 @@ public class FrmLogistica extends JFrame {
 
         pnlEditarEnvio.add(cmbTipoEnvio);
 
-        JLabel lblDistancia = new JLabel("Distancia en Km");
-        lblDistancia.setBounds(220, 40, 100, 25);
+        JLabel lblDistancia = new JLabel("Distancia en KM");
+        lblDistancia.setBounds(220, 70, 100, 25);
         pnlEditarEnvio.add(lblDistancia);
 
         txtDistancia = new JTextField();
-        txtDistancia.setBounds(320, 40, 100, 25);
+        txtDistancia.setBounds(320, 70, 100, 25);
         pnlEditarEnvio.add(txtDistancia);
 
         // botones de guardar y cancelar, que ejecutan acciones al ser presionados
@@ -169,11 +169,11 @@ public class FrmLogistica extends JFrame {
         };
         tblEnvios.setModel(ccc);
 
-        tblEnvios.getTableHeader().setReorderingAllowed(false);
-        tblEnvios.getTableHeader().setBackground(new Color(40, 144, 255));
+        tblEnvios.getTableHeader().setReorderingAllowed(false); 
+        tblEnvios.getTableHeader().setBackground(new Color(40, 144, 255)); // estilos del encabezado de la lista
         tblEnvios.getTableHeader().setForeground(Color.WHITE);
         tblEnvios.setBorder(new LineBorder(Color.lightGray, 2));
-        tblEnvios.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+        tblEnvios.getTableHeader().setFont(new java.awt.Font("Consolas", java.awt.Font.BOLD, 14));
 
         // Agregar componentes
         pnlEnvios.add(pnlEditarEnvio);
